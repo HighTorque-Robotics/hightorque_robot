@@ -1,4 +1,5 @@
 #include <rclcpp/rclcpp.hpp>
+#include <cstdio>
 #include <ament_index_cpp/get_package_share_directory.hpp>
 #include <hightorque_robot_ros2_example/msg/motor_state.hpp>
 
@@ -47,6 +48,9 @@ int main(int argc, char** argv)
                 message.velocity = state.velocity;
                 message.torque = state.torque;
                 publisher->publish(message);
+                std::printf("ID: %2d, mode: %2d, fault: %2d, pos: %2.3f, vel: %2.3f, tor: %2.3f\n",
+                            static_cast<int>(item.first), state.mode, state.fault,
+                            state.position, state.velocity, state.torque);
             }
         }
         rclcpp::spin_some(node);

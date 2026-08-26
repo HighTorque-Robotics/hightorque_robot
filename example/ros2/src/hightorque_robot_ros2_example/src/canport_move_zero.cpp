@@ -1,4 +1,5 @@
 #include <rclcpp/rclcpp.hpp>
+#include <cstdio>
 #include <hightorque_robot_ros2_example/msg/motor_state.hpp>
 
 #include "canport.h"
@@ -28,6 +29,9 @@ int main(int argc, char** argv)
             motor.velocity = state.velocity;
             motor.torque = state.torque;
             publisher->publish(motor);
+            std::printf("ID: %2d, mode: %2d, fault: %2d, pos: %2.3f, vel: %2.3f, tor: %2.3f\n",
+                        static_cast<int>(item.first), state.mode, state.fault,
+                        state.position, state.velocity, state.torque);
         }
         rclcpp::spin_some(node);
         rate.sleep();
