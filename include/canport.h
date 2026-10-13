@@ -72,6 +72,8 @@ public:
 
     void send(void);
     fdcan_state_s *get_can_port_state(void);
+    version_s get_sdk_version(void);
+    version_s get_comm_version(void);
 private:
     version_s comm_version;  // 通信板版本号
     version_s sdk_version;   // SDK 版本号
@@ -91,7 +93,7 @@ private:
     void ser_init(std::string port_name);
     void port_tdata_clean(const uint8_t mode, const uint16_t len);
     void comm_init(void);
-    void get_comm_version();
+    void update_comm_version(void);
     void set_cache_num(uint8_t num);
 
     uint16_t get_data_len(uint8_t mode, uint16_t num);

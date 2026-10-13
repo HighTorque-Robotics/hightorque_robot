@@ -134,7 +134,7 @@ void CanPort::init(uint8_t _can_port_id, const std::map<uint8_t, std::string>& m
     }
     PRINT_INFO_G("[CanPort%d] init", can_port_id);
     ser_init(ser_list[can_port_id - 1]);
-    get_comm_version();
+    update_comm_version();
     if (comm_version.data32 < VER_COMBINE(6, 0, 0))
     {
         PRINT_ERROR("[CanPort%d] comm board version too low: v%d.%d.%d, require >= v6.0.0", can_port_id, comm_version.major, comm_version.minor, comm_version.patch);
@@ -236,7 +236,7 @@ void CanPort::ser_init(std::string port_name)
 }
 
 
-void CanPort::get_comm_version()
+void CanPort::update_comm_version()
 {
     port_tdata_clean(MODE_COMM_VERSION, 0);
 
@@ -677,6 +677,18 @@ motor_state_t *CanPort::get_motor_state(uint8_t id)
 fdcan_state_s *CanPort::get_can_port_state()
 {
     return &can_port_state;
+}
+
+
+version_s CanPort::get_sdk_version(void)
+{
+    return sdk_version;
+}
+
+
+version_s CanPort::get_comm_version(void)
+{
+    return comm_version;
 }
 
 
